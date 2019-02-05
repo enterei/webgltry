@@ -1,14 +1,16 @@
 function Object(gl) {
+    Object.verticesl;
     if (Object.shaderProgram === undefined) {
+        console.log("jau vor dem laden");
         Object.shaderProgram = initShaders(gl, "vertex-shader", "fragment-shader");
-        ;
+        
         if (Object.shaderProgram === null) {
             throw new Error('Creating the shader program failed.');
         }
         Object.locations = {
             attribute: {
-                aPosition: gl.getAttribLocation(Object.shaderProgram, "vPosition"),
-                aColor: gl.getAttribLocation(Object.shaderProgram, "vColor"),
+                aPosition: gl.getAttribLocation(Object.shaderProgram, "aPosition"),
+                aColor: gl.getAttribLocation(Object.shaderProgram, "aColor"),
                 aNormal: gl.getAttribLocation(Object.shaderProgram, "aNormal")
             },
             uniform: {
@@ -28,7 +30,7 @@ function Object(gl) {
         // 2 triangles make up the ground plane, 4 triangles make up the sides
         const pBuffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, pBuffer);
-        let vertices = [-0.5, 0.0, -0.5,    // ground plane
+        var vertices = [-0.5, 0.0, -0.5,    // ground plane
                          0.5, 0.0, -0.5,
                          0.5, 0.0,  0.5,
                         
@@ -51,6 +53,7 @@ function Object(gl) {
                         -0.5, 0.0,  0.5,
                         -0.5, 0.0, -0.5,
                          0.0, 1.0,  0.0];
+        Object.verticesl=vertices.length;
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
         
         // Create a buffer with the vertex colors
@@ -144,8 +147,8 @@ function Object(gl) {
         gl.vertexAttribPointer(Object.locations.attribute.aNormal,
                                Object.buffers.nComponents,
                                gl.FLOAT, false, 0, 0);
-                               
-        gl.drawArrays(gl.TRIANGLES, 0, 18);
+       
+        gl.drawArrays(gl.TRIANGLES, 0, Object.verticesl/3);
     };
     
     this.update = function(delta) {

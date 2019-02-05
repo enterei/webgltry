@@ -40,6 +40,38 @@
                 gl_FragColor = vec4(vColor * intensity + vColor * 0.1, 1.0);
             }
         </script>
+
+        <script id="vertex-shader" type="x-shader/x-vertex">
+            attribute vec3 aPosition;
+            attribute vec3 aColor;
+            attribute vec3 aNormal;
+
+            // model matrix
+            uniform mat4 uMMatrix;
+            // transposed inverse of the model matrix for transforming normals
+            uniform mat3 uMMatrixTInv;
+            // projection matrix
+            uniform mat4 uPMatrix;
+            
+            varying mediump vec3 vColor;
+            varying mediump vec3 vNormal;
+            void main()
+            {
+            vColor = aColor;
+            gl_Position = uPMatrix * uMMatrix * vec4(aPosition, 1.0);
+            }
+            </script>
+            
+            <script id="fragment-shader" type="x-shader/x-fragment">
+            
+                varying mediump vec3 vColor;
+                varying mediump vec3 vNormal;
+            
+            void main()
+            {
+                gl_FragColor = vec4(vColor,1.0);
+            }
+            </script>
         
         <!-- gl-matrix.js for linear algebra -->
         <script type="text/javascript" src="gl-matrix/gl-matrix-min.js"></script>

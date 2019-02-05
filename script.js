@@ -29,11 +29,11 @@ function init(){
         const delta = now - then;
         then = now;
         
-        pyramid.update(delta);
+        object.update(delta);
         
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-        pyramid.draw(gl, pMatrix);
+        object.draw(gl, pMatrix);
         
         requestAnimationFrame(render);
     }

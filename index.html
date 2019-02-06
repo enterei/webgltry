@@ -44,17 +44,17 @@
         <script id="vertex-shader" type="x-shader/x-vertex">
             attribute vec3 aPosition;
             attribute vec3 aColor;
-            attribute vec3 aNormal;
+            
 
             // model matrix
             uniform mat4 uMMatrix;
             // transposed inverse of the model matrix for transforming normals
-            uniform mat3 uMMatrixTInv;
+          
             // projection matrix
             uniform mat4 uPMatrix;
             
             varying mediump vec3 vColor;
-            varying mediump vec3 vNormal;
+          
             void main()
             {
             vColor = aColor;
@@ -65,19 +65,20 @@
             <script id="fragment-shader" type="x-shader/x-fragment">
             
                 varying mediump vec3 vColor;
-                varying mediump vec3 vNormal;
+              
             
             void main()
             {
-                gl_FragColor = vec4(vColor,1.0);
+                gl_FragColor = vec4(vColor,1.0 );
             }
             </script>
         
         <!-- gl-matrix.js for linear algebra -->
         <script type="text/javascript" src="gl-matrix/gl-matrix-min.js"></script>
         <script type="text/javascript" src="initShaders.js"></script>
-        <script type="text/javascript" src="object.js"></script>
+       <script type="text/javascript" src="coordinateSystem.js"></script>
         <script type="text/javascript" src="script.js"></script>
+        <script type="text/javascript" src="cube.js"></script>
     </head>
     <body onload="main()">
         <div>

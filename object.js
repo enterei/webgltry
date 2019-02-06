@@ -21,7 +21,6 @@ function Object(gl) {
         };
         gl.enableVertexAttribArray(Object.locations.attribute.aPosition);
         gl.enableVertexAttribArray(Object.locations.attribute.aColor);
-        gl.enableVertexAttribArray(Object.locations.attribute.aNormal);
     }
 
     if (Object.buffers === undefined) {
@@ -53,6 +52,9 @@ function Object(gl) {
                         -0.5, 0.0,  0.5,
                         -0.5, 0.0, -0.5,
                          0.0, 1.0,  0.0];
+       
+       
+        console.log(vertices);
         Object.verticesl=vertices.length;
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
         
@@ -122,7 +124,7 @@ function Object(gl) {
             nComponents: 3 // number of components per normal in nBuffer
         };
     }
-    this.position = [0, 0, -50];
+    this.position = [-0.0, -0.0, -50];
     this.rotationY = 0;
     this.rotationX = 0.5;
     this.mMatrix = mat4.create();
@@ -143,23 +145,21 @@ function Object(gl) {
         gl.vertexAttribPointer(Object.locations.attribute.aColor,
                                Object.buffers.cComponents,
                                gl.FLOAT, false, 0, 0);
-        gl.bindBuffer(gl.ARRAY_BUFFER, Object.buffers.nBuffer);
-        gl.vertexAttribPointer(Object.locations.attribute.aNormal,
-                               Object.buffers.nComponents,
-                               gl.FLOAT, false, 0, 0);
+      
        
         gl.drawArrays(gl.TRIANGLES, 0, Object.verticesl/3);
     };
     
     this.update = function(delta) {
         this.rotationY += 0.5*delta;
-        this.rotationX += 0.1*delta;
+       // this.rotationX += 0.1*delta;
         
         // set the current model matrix
         mat4.identity(this.mMatrix);
         mat4.translate(this.mMatrix, this.mMatrix, this.position);
         mat4.rotateY(this.mMatrix, this.mMatrix, this.rotationY);
         mat4.rotateX(this.mMatrix, this.mMatrix, this.rotationX);
+        
         
         // compute the inverse transpose of the 3x3 submatrix of the model matrix
         mat3.normalFromMat4(this.mMatrixTInv, this.mMatrix);

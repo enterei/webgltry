@@ -1,7 +1,16 @@
 function main(){
     init();
 }
+
+var trans = [0, 0, 0];
+
+//rotation
+var rotas = [0, 0, 0];
+// scaling
+var scale = [1, 1, 1];
+
 function init(){
+    
     var cubes = [];
     const canvas = document.getElementById("glCanvas");
     const gl = canvas.getContext("webgl");
@@ -34,7 +43,7 @@ function init(){
         then = now;
         
         //object.update(delta);
-        cube.update(delta);
+        cube.update(delta,trans,scale,rotas);
         
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
@@ -52,6 +61,134 @@ function init(){
     // Start rendering
     requestAnimationFrame(render);
 
+}
+
+
+
+window.onkeydown = function (event) {
+
+    var key = String.fromCharCode(event.keyCode);
+    switch (key) {
+        case '0': selected = 10;
+          
+            break;
+
+        case '1':
+            selected = 0;
+            break;
+        case '2':
+            selected = 1;
+            break;
+        case '3':
+            document.getElementById("p1").innerHTML=" 3 pressed";
+            selected = 2;
+            break;
+        case '4':
+            selected = 3;
+            break;
+        case '5':
+            selected = 4;
+            break;
+        case '6':
+            selected = 5;
+            break;
+        case '7':
+            selected = 6;
+            break;
+        case '8':
+            selected = 7;
+            break;
+        case '9':
+            selected = 8;
+            break;
+
+
+
+
+
+    }
+    var key = event.keyCode;
+    switch (key) {
+
+
+        case 37:
+            trans[0] = -0.01;
+
+
+            break;
+
+        case 39:
+            trans[0] = 0.01;
+            break;
+
+        case 38:
+            trans[1] = 0.01;
+            break;
+        case 40:
+            trans[1] = -0.01;
+            break;
+        case 190:
+            trans[2] = 0.01;
+            break;
+
+
+        case 188: trans[2] = -0.01;
+            break;
+
+
+
+        case 83:
+            rotas[0] = -0.1;
+            
+            break;
+
+        case 87: rotas[0] = 0.1;
+            break;
+        case 81: rotas[1] = 0.1;
+            break;
+        case 69: rotas[1] = -0.1;
+            break;
+        case 65: rotas[2] = 0.1;
+
+            break;
+        case 68: rotas[2] = -0.1;
+            break;
+        case 88:
+            scale[0] = 0.9;
+            break;
+        case 86:
+            scale[0] = 1.1;
+            break;
+        case 89:
+            scale[1] = 0.9;
+            break;
+        case 66:
+            scale[1] = 1.1;
+            break;
+        case 90:
+            scale[2] = 0.9;
+            break;
+        case 78:
+            scale[2] = 1.1;
+            break;
+
+    }
+
+
+}
+
+
+window.onkeyup = function (event) {
+
+    rotas[0] = 0.0;
+    rotas[1] = 0.0;
+    rotas[2] = 0.0;
+    trans[0] = 0.0;
+    trans[1] = 0.0;
+    trans[2] = 0.0;
+    scale[0] = 1.0;
+    scale[1] = 1.0;
+    scale[2] = 1.0;
 }
 
 

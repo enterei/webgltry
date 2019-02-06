@@ -35,7 +35,7 @@ function Cube(gl,inittrans){
         gl.bindBuffer(gl.ARRAY_BUFFER, pBuffer);
         
        
-      
+        
         
   
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(points), gl.STATIC_DRAW);
@@ -58,8 +58,19 @@ function Cube(gl,inittrans){
         };
     }
     this.position = inittrans;
-    this.rotationY = 0;
-    this.rotationX = 0.5;
+    this.oldpos=this.position;
+    this.rotationY = 0.0;
+    this.rotationX = 0.0;
+    this.rotationZ = 0.0;
+
+   
+
+    this.scaleY = 0.0;
+    this.scaleX = 0.0;
+    this.scaleZ = 0.0;
+
+
+
     this.mMatrix = mat4.create();
     this.mMatrixTInv = mat3.create();
 
@@ -84,22 +95,47 @@ function Cube(gl,inittrans){
         gl.drawArrays(gl.TRIANGLES, 0, 36);
     };
     
-    this.update = function(delta) {
-        this.rotationY += 0.5*delta;
-       // this.rotationX += 0.1*delta;
-        
-        // set the current model matrix
-        mat4.identity(this.mMatrix);
+    this.update = function(delta,t,s,r) {
+        console.log(this.position);
+        for(var i = 0;i<3;i++) this.position[i]+=t[i];
+
+     
+        this.rotationX+=r[0];
+        this.rotationY+=r[1];
+        this.rotationZ+=r[2];
+
+        this.scaleY =s[1];
+        this.scaleX = s[0];
+        this.scaleZ = s[2];
+     
+
+       //    mat4.identity(this.mMatrix);
+      if(this.position!=this.oldpos){
         mat4.translate(this.mMatrix, this.mMatrix, this.position);
+        this.oldpos=this.position;
+
+    }
+      
+         mat4.translate(this.mMatrix, this.mMatrix, this.position);
         mat4.rotateY(this.mMatrix, this.mMatrix, this.rotationY);
         mat4.rotateX(this.mMatrix, this.mMatrix, this.rotationX);
+        mat4.rotateZ(this.mMatrix, this.mMatrix, this.rotationZ);
+
+      //  mat4.scale(this.mMatrix,this.mMatrix,[this.scaleX,this.scaleY,this.scaleZ]);
         
         
-        // compute the inverse transpose of the 3x3 submatrix of the model matrix
-        mat3.normalFromMat4(this.mMatrixTInv, this.mMatrix);
+        
+      
     };
 
 }
+
+
+
+
+
+
+
 
 function fillpoints(){
     cube_indices

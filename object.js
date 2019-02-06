@@ -122,7 +122,7 @@ function Object(gl) {
             nComponents: 3 // number of components per normal in nBuffer
         };
     }
-    this.position = [0, 0, -4];
+    this.position = [0, 0, -50];
     this.rotationY = 0;
     this.rotationX = 0.5;
     this.mMatrix = mat4.create();

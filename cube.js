@@ -56,18 +56,22 @@ function Cube(gl,inittrans){
             cComponents: 3, // number of components per color in cBuffer
             
         };
+        
     }
     this.position = inittrans;
-    this.oldpos=this.position;
+    //this.oldpos=this.position;
+    
     this.rotationY = 0.0;
     this.rotationX = 0.0;
     this.rotationZ = 0.0;
+    this.rotaM = mat4.create();
 
    
-
+    
     this.scaleY = 0.0;
     this.scaleX = 0.0;
     this.scaleZ = 0.0;
+    this.scaleM=[1.0,1.0,1.0];
 
 
 
@@ -91,12 +95,12 @@ function Cube(gl,inittrans){
                                Cube.buffers.cComponents,
                                gl.FLOAT, false, 0, 0);
      
-       
+//       console.log(this.position);
         gl.drawArrays(gl.TRIANGLES, 0, 36);
     };
     
-    this.update = function(delta,t,s,r) {
-        console.log(this.position);
+    /*this.update = function(delta,t,s,r) {
+        console.log("sollte nei vorkommen !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         for(var i = 0;i<3;i++) this.position[i]+=t[i];
 
      
@@ -109,17 +113,22 @@ function Cube(gl,inittrans){
         this.scaleZ = s[2];
      
 
-       //    mat4.identity(this.mMatrix);
-      if(this.position!=this.oldpos){
+      // mat4.identity(this.mMatrix);
+       var ctm = mat4.create();
+      /*if(this.position!=this.oldpos){
         mat4.translate(this.mMatrix, this.mMatrix, this.position);
         this.oldpos=this.position;
 
-    }
+    }*/
+  //  mat4.translate(this.mMatrix, this.mMatrix, this.position);
+  /*  mat4.rotateY(ctm, ctm ,this.rotationY);
+    mat4.rotateX(ctm, ctm, this.rotationX);
+    mat4.rotateZ(ctm, ctm, this.rotationZ);
+    mat4.translate(ctm, ctm, t);  
+    
+        mat4.multiply(this.mMatrix,this.mMatrix,ctm);
       
-         mat4.translate(this.mMatrix, this.mMatrix, this.position);
-        mat4.rotateY(this.mMatrix, this.mMatrix, this.rotationY);
-        mat4.rotateX(this.mMatrix, this.mMatrix, this.rotationX);
-        mat4.rotateZ(this.mMatrix, this.mMatrix, this.rotationZ);
+        mat4.identity(ctm);
 
       //  mat4.scale(this.mMatrix,this.mMatrix,[this.scaleX,this.scaleY,this.scaleZ]);
         
@@ -127,6 +136,90 @@ function Cube(gl,inittrans){
         
       
     };
+*/
+    this.updateRota=function(r){
+        console.log("s");
+      /*  mat4.rotateX(this.mMatrix,this.mMatrix,r[0]);
+        mat4.rotateY(this.mMatrix,this.mMatrix,r[1]);
+        mat4.rotateZ(this.mMatrix,this.mMatrix,r[2]);*/
+
+        var backTrans = [];
+        for(var i = 0;i<3;i++)backTrans[i]=this.position[i]*-1;
+        console.log(this.rotaM);
+        console.log(this.position);
+        console.log(backTrans);
+        mat4.translate(this.rotaM,this.rotaM,backTrans);
+        console.log(this.rotaM);
+        mat4.rotateX(this.rotaM,this.rotaM,r[0]);
+        mat4.rotateY(this.rotaM,this.rotaM,r[1]);
+        mat4.rotateZ(this.rotaM,this.rotaM,r[2]);
+      //  mat4.translate(this.rotaM,this.rotaM,this.position);
+       this.updateAll();
+
+    };
+    this.updateGlRota=function(r){
+        var backTrans = [];
+        for(var i = 0;i<3;i++)backTrans[i]=this.position[i]*-1;
+        console.log("habede");
+        var ctm = mat4.create();
+       
+        mat4.translate(ctm,ctm,this.position);
+        console.log(ctm);
+        var ii = 0-this.position[0];
+        console.log(ii);
+
+        mat4.rotate(ctm,ctm,r[0],[1-ii,0,0]);
+        mat4.rotate(ctm,ctm,r[1],[0,1,0]);
+        mat4.rotate(ctm,ctm,r[2],[0,0,1]);
+        console.log(ctm);
+
+
+
+//        mat4.rotateX(ctm,ctm,r[0]);
+  //      mat4.rotateY(ctm,ctm,r[1]);
+    //    mat4.rotateZ(ctm,ctm,r[2]);
+        
+        mat4.translate(ctm,ctm,backTrans);
+   //     console.log(ctm);
+       // mat4.multiply(this.mMatrix,this.mMatrix,mat4.fromRotation())
+        
+    //    mat4.multiply(this.mMatrix,ctm,this.mMatrix);
+       mat4.multiply(this.mMatrix,this.mMatrix,ctm);
+      //  mat4.translate(this.mMatrix,this.mMatrix,this.position);
+      //  mat4.rotateX(this.mMatrix,this.mMatrix,r[0]);
+       // mat4.rotateY(this.mMatrix,this.mMatrix,r[1]);
+       // mat4.rotateY(this.mMatrix,this.mMatrix,r[2]);
+        //mat4.translate(this.mMatrix,this.mMatrix,backTrans);
+
+       
+        
+
+    };
+    this.updateTrans= function(t){
+        for(var i = 0;i<3;i++) this.position[i]+=t[i];
+       // mat4.translate(this.mMatrix,this.mMatrix,t);
+       console.log("habede");
+       this.updateAll();
+    };
+
+    this.updateScale = function(s){
+        mat4.scale(this.mMatrix,this.mMatrix,s);
+    };
+
+    this.updateAll= function(){
+        mat4.identity(this.mMatrix);
+       /* console.log(this.mMatrix);
+        console.log(this.rotaM);
+        console.log(this.position);
+        console.log(this.scaleM);*/
+        mat4.multiply(this.mMatrix,this.mMatrix,this.rotaM);
+        mat4.translate(this.mMatrix,this.mMatrix,this.position);
+        
+        
+        
+
+  //      mat4.fromRotationTranslationScale(this.mMatrix,this.rotaM,this.position,this.scaleM);
+    }
 
 }
 

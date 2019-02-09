@@ -56,9 +56,9 @@ function init() {
 
 
     //    cubes[selected].draw(gl, perspectiveMatrix);
-        //coord.draw(gl,perspectiveMatrix,cubes[selected].mMatrix);
+        coord.draw(gl,perspectiveMatrix,cubes[selected].mMatrix);
 
-        cubes[selected].draw(gl, pMatrix);
+        //cubes[selected].draw(gl, pMatrix);
         coord.draw(gl, pMatrix, cubes[selected].mMatrix);
 
 
@@ -194,7 +194,7 @@ window.onkeydown = function (event) {
             break;
         //trst
         case 80:
-            rotas[0] = 0.05;
+            rotas[0] = 0.1;
             cubes[selected].updateGlRota(rotas);
 
             break;

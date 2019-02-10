@@ -29,18 +29,34 @@ function init() {
     const zNear =- 0.001;
     const zFar = 100;
     mat4.ortho(pMatrix, -asp, asp, bottom, -bottom, zNear, zFar);
-    perspectiveMatrix = mat4.perspective(perspectiveMatrix, 45, canvas.width / canvas.height, 0.001, 30);
-   // try {
-        //  var object = new Object(gl);
-        var cube = new Cube(gl, [0.0, 0.2, -0.5]);
-        // mat4.translate(cube.mMatrix, cube.mMatrix, cube.position);
-        cube.updateTrans(cube.position);
+    perspectiveMatrix = mat4.perspective(perspectiveMatrix, 45, canvas.width / canvas.height,0.01, 30);
+    try {
+        
+        var cube1 = new Cube(gl, [0.3, 0.3, -2.5]);
+        var cube2 = new Cube(gl, [0.1, 0.7, -2.5]);
+        var cube3 = new Cube(gl, [0.6, 0.2, -2.5]);
+        var cube4 = new Cube(gl, [0.2, 0.2, -2.5]);
+        var cube5 = new Cube(gl, [-0.6, 0.6, -2.5]);
+        var cube6 = new Cube(gl, [0.2, 0.5, -2.5]);
+        var cube7 = new Cube(gl, [-0.3, 0.2, -2.5]);
+        cubes.push(cube1);
+        cubes.push(cube2);
+        cubes.push(cube3);
+        cubes.push(cube4);
+        cubes.push(cube5);
+        cubes.push(cube6);
+        cubes.push(cube7);
+        for(var i = 0;i<7;i++)cubes[i].updateTrans(cubes[i].position); // for alls cubes todo
+
+
+         
+        
         var coord = new CoordinateSystem(gl);
-  //  } catch (E) {
- //       alert(E+"dsfnkjsfdlksfd");
- //       return;
- //   }
-    cubes.push(cube);
+   } catch (E) {
+       alert(E+"dsfnkjsfdlksfd");
+       return;
+   }
+  
     var then = 0;
     function render(now) {
         // calculate time per frame (seconds)
@@ -53,13 +69,18 @@ function init() {
 
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
+   /*     for(var i = 0;i<cubes.length;i++)cubes[i].draw(gl,pMatrix,cubes[i].mMatrix);
+        if(selected!=10)coord.draw(gl,pMatrix,cubes[selected].mMatrix);*/
 
 
-    //    cubes[selected].draw(gl, perspectiveMatrix);
-        coord.draw(gl,perspectiveMatrix,cubes[selected].mMatrix);
+        for(var i = 0;i<cubes.length;i++)cubes[i].draw(gl,perspectiveMatrix,cubes[i].mMatrix);
+        if(selected!=10)coord.draw(gl,perspectiveMatrix,cubes[selected].mMatrix);
+
+      //  cubes[selected].draw(gl, perspectiveMatrix);
+        
 
         //cubes[selected].draw(gl, pMatrix);
-        coord.draw(gl, pMatrix, cubes[selected].mMatrix);
+    //    coord.draw(gl, pMatrix, cubes[selected].mMatrix);
 
 
         requestAnimationFrame(render);

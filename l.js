@@ -1,4 +1,4 @@
-var points= [];
+var lpoints= [];
 function L(gl,inittrans){
 
     
@@ -27,7 +27,7 @@ function L(gl,inittrans){
     }
 
     if (L.buffers === undefined) {
-        fillpoints();
+        fillpoints_l();
         // Create a buffer with the vertex positions
         // 3 coordinates per vertex, 3 vertices per triangle
         // 2 triangles make up the ground plane, 4 triangles make up the sides
@@ -38,13 +38,13 @@ function L(gl,inittrans){
         
         
   
-        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(points), gl.STATIC_DRAW);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(lpoints), gl.STATIC_DRAW);
         
         // Create a buffer with the vertex colors
         const cBuffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer);
         
-        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colors), gl.STATIC_DRAW);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(lcolors), gl.STATIC_DRAW);
         
        
         
@@ -98,7 +98,7 @@ function L(gl,inittrans){
                                gl.FLOAT, false, 0, 0);
      
 //       console.log(this.position);
-        gl.drawArrays(gl.TRIANGLES, 0, 36);
+        gl.drawArrays(gl.TRIANGLES, 0, 54);
     };
     
 
@@ -181,25 +181,138 @@ function L(gl,inittrans){
 
 
 
-function fillpoints(){
-    L_indices
-    for (var i = 0; i < L_indices.length; ++i) {
+function fillpoints_l(){
+ 
+    for (var i = 0; i < L_indices.length; i++) {
        var x = L_vertices[L_indices[i]];  
-       points.push(x[0]);   
-       points.push(x[1]);  
-       points.push(x[2]);     
+       console.log(i);
+       console.log(L_indices[i]);
+       console.log(x);
+       lpoints.push(x[0]);   
+       lpoints.push(x[1]);  
+       lpoints.push(x[2]);     
     }
 
 }
+var L_indices = [
+    0,6,10,6,10,8,
+    8,10,9,10,9,11,
+    11,1,7,11,7,9,
+    9,8,7,8,7,6,
+    6,5,4,6,4,7,
+    5,2,3,5,3,4,
+    5,7,3,5,3,1,
+    1,10,11,1,10,0,
+    0,3,1,0,3,2,
+    
+    ];
 
 
-var colors = [
+var lcolors = [
+    1.0, 0.0, 0.0 ,
+     1.0, 0.0, 0.0 ,
+     1.0, 0.0, 0.0 ,
+     1.0, 0.0, 0.0 ,
+     1.0, 0.0, 0.0 ,
+     1.0, 0.0, 0.0 ,
+     1.0, 0.0, 1.0 ,
+     1.0, 0.0, 1.0 ,
+     1.0, 0.0, 1.0 ,
+     1.0, 0.0, 1.0 ,
+     1.0, 0.0, 1.0 ,
+     1.0, 0.0, 1.0 ,
+
+     1.0, 0.0, 0.0 ,
+     1.0, 0.0, 0.0 ,
+     1.0, 0.0, 0.0 ,
+     1.0, 0.0, 0.0 ,
+     1.0, 0.0, 0.0 ,
+     1.0, 0.0, 0.0 ,
+     0.0, 1.0, 0.0 ,
+     0.0, 1.0, 0.0 ,
+     0.0, 1.0, 0.0 ,
+     0.0, 1.0, 0.0 ,
+     0.0, 1.0, 0.0 ,
+     0.0, 1.0, 0.0 ,
+
+
+
+
+
+
      0.0, 0.0, 0.0 ,
      0.0, 0.0, 0.0 ,
      0.0, 0.0, 0.0 ,
      0.0, 0.0, 0.0 ,
      0.0, 0.0, 0.0 ,
      0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+     0.0, 0.0, 0.0 ,
+
      1.0, 0.0, 0.0 ,
      1.0, 0.0, 0.0 ,
      1.0, 0.0, 0.0 ,
@@ -252,13 +365,3 @@ var L_vertices = [
 
 
 
-var L_indices = [
-
-    0, 1, 2, 0, 2, 3,
-    3, 2, 6, 3, 6, 7,
-    7, 6, 5, 7, 4, 5,
-    5, 6, 2, 5, 1, 2,
-    1, 0, 4, 1, 5, 4,
-    4, 7, 3, 4, 0, 3,
-
-];

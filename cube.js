@@ -182,7 +182,7 @@ function Cube(gl,inittrans){
 
 
 function fillpoints(){
-    cube_indices
+
     for (var i = 0; i < cube_indices.length; ++i) {
        var x = cube_vertices[cube_indices[i]];  
        points.push(x[0]);   

@@ -39,7 +39,7 @@ function init() {
         var cube5 = new Cube(gl, [-0.6, 0.6, -2.5]);
         var cube6 = new Cube(gl, [0.2, 0.5, -2.5]);
         var cube7 = new Cube(gl, [-0.3, 0.2, -2.5]);
-        var l1 = new L(gl,[0.0,0.0,-5.0]);
+        var l1 = new L(gl,[0.0,0.0,-0.5]);
 
         cubes.push(cube1);
         cubes.push(cube2);
@@ -49,7 +49,7 @@ function init() {
         cubes.push(cube6);
         cubes.push(cube7);
         cubes.push(l1);
-        for(var i = 0;i<7;i++)cubes[i].updateTrans(cubes[i].position); // for alls cubes todo
+        for(var i = 0;i<8;i++)cubes[i].updateTrans(cubes[i].position); // for alls cubes todo
 
 
          

@@ -17,9 +17,9 @@ function CoordinateSystem(gl){
                
             },
             uniform: {
-                uMMatrix: gl.getUniformLocation(CoordinateSystem.shaderProgram, "uMMatrix"),
+                uMMatrix: gl.getUniformLocation(CoordinateSystem.shaderProgram, "modelMatrix"),
                
-                uPMatrix: gl.getUniformLocation(CoordinateSystem.shaderProgram, "uPMatrix")
+                uPMatrix: gl.getUniformLocation(CoordinateSystem.shaderProgram, "ProjectionMatrix")
             }
         };
         gl.enableVertexAttribArray(CoordinateSystem.locations.attribute.aPosition);
@@ -29,9 +29,7 @@ function CoordinateSystem(gl){
 
     if (CoordinateSystem.buffers === undefined) {
      
-        // Create a buffer with the vertex positions
-        // 3 coordinates per vertex, 3 vertices per triangle
-        // 2 triangles make up the ground plane, 4 triangles make up the sides
+ 
         const pBuffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, pBuffer);
         
@@ -41,7 +39,7 @@ function CoordinateSystem(gl){
   
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(syspoints), gl.STATIC_DRAW);
         
-        // Create a buffer with the vertex colors
+  
         const cBuffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer);
         

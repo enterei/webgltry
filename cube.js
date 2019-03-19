@@ -16,9 +16,9 @@ function Cube(gl,inittrans){
                
             },
             uniform: {
-                uMMatrix: gl.getUniformLocation(Cube.shaderProgram, "uMMatrix"),
+                uMMatrix: gl.getUniformLocation(Cube.shaderProgram, "modelMatrix"),
                
-                uPMatrix: gl.getUniformLocation(Cube.shaderProgram, "uPMatrix")
+                uPMatrix: gl.getUniformLocation(Cube.shaderProgram, "ProjectionMatrix")
             }
         };
         gl.enableVertexAttribArray(Cube.locations.attribute.aPosition);

@@ -16,9 +16,9 @@ function L(gl,inittrans){
                
             },
             uniform: {
-                uMMatrix: gl.getUniformLocation(L.shaderProgram, "uMMatrix"),
+                uMMatrix: gl.getUniformLocation(L.shaderProgram, "modelMatrix"),
                
-                uPMatrix: gl.getUniformLocation(L.shaderProgram, "uPMatrix")
+                uPMatrix: gl.getUniformLocation(L.shaderProgram, "ProjectionMatrix")
             }
         };
         gl.enableVertexAttribArray(L.locations.attribute.aPosition);

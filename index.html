@@ -6,40 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <!-- Basic vertex shader -->
-        <script id="vs_basic" type="x-shader/x-vertex">
-            attribute vec3 aPosition;
-            attribute vec3 aColor;
-            attribute vec3 aNormal;
-
-            // model matrix
-            uniform mat4 uMMatrix;
-            // transposed inverse of the model matrix for transforming normals
-            uniform mat3 uMMatrixTInv;
-            // projection matrix
-            uniform mat4 uPMatrix;
-            
-            varying mediump vec3 vColor;
-            varying mediump vec3 vNormal;
-
-            void main() {
-                gl_Position = uPMatrix * uMMatrix * vec4(aPosition, 1.0);
-                vColor = aColor;
-                vNormal = mat3(uMMatrixTInv) * aNormal;
-            }
-        </script>
+     
         <!-- Basic fragment shader -->
-        <script id="fs_basic" type="x-shader/x-fragment">
-            varying mediump vec3 vColor;
-            varying mediump vec3 vNormal;
-            
-            void main() {
-                // direction of parallel light source
-                const mediump vec3 lightDir = vec3(-1.0, -1.0, -1.0);
-                mediump float intensity = max(0.0, -dot(normalize(vNormal), lightDir));
-                // diffuse reflection + ambient light
-                gl_FragColor = vec4(vColor * intensity + vColor * 0.1, 1.0);
-            }
-        </script>
+
 
         <script id="vertex-shader" type="x-shader/x-vertex">
             attribute vec3 aPosition;
@@ -47,18 +16,18 @@
             
 
             // model matrix
-            uniform mat4 uMMatrix;
-            // transposed inverse of the model matrix for transforming normals
+            uniform mat4 modelMatrix;
+          
           
             // projection matrix
-            uniform mat4 uPMatrix;
+            uniform mat4 ProjectionMatrix;
             
             varying mediump vec3 vColor;
           
             void main()
             {
             vColor = aColor;
-            gl_Position = uPMatrix * uMMatrix * vec4(aPosition, 1.0);
+            gl_Position = ProjectionMatrix * modelMatrix * vec4(aPosition, 1.0);
             }
             </script>
             
